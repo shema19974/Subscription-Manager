@@ -3,6 +3,9 @@ package com.sm.controller;
 import java.net.URI;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,6 +52,15 @@ public class UserController {
 		userService.addRoleToUser(roleForm.getUsername(), roleForm.getRoleName());
 		return ResponseEntity.ok().build();
 	}	
+	
+//	@PostMapping("/roles/addtouser")
+//	public void refreshToken(HttpServletRequest request, HttpServletResponse response){
+//		String authorizationHeader = request.getHeader("Authorization");
+//	}
+	@GetMapping("/checker")
+	public String check() {
+		return "Checked";
+	}
 	
 }
 

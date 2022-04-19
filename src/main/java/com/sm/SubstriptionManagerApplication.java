@@ -6,6 +6,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.sm.domain.Role;
 import com.sm.domain.User;
@@ -31,13 +33,16 @@ public class SubstriptionManagerApplication {
 			userService.saveUser(new User(null, "Paul Kagame", "pk", "1234", new ArrayList()));
 			
 			userService.addRoleToUser("prince1997", "ROLE_USER");
-			userService.addRoleToUser("prince1997", "ADMIN_USER");
 			userService.addRoleToUser("pk", "ADMIN_USER");
 			userService.addRoleToUser("willy", "ROLE_MANAGER");
-			
-			
+					
 			
 		};
+	}
+	
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 
 }
