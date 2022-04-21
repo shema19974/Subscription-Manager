@@ -39,9 +39,9 @@ public class ConfigureSecurity extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// disable the cross-site request forgery
-		http.cors();
+		
 		http.csrf().disable();
-		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		//http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		// Allow every to access the application
 		
 		http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());

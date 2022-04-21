@@ -21,7 +21,7 @@ import com.sm.service.ServiceEligibiltyService;
 
 import lombok.AllArgsConstructor;
 
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("api/services")
 @AllArgsConstructor

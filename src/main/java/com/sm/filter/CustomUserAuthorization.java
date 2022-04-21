@@ -43,6 +43,7 @@ public class CustomUserAuthorization extends OncePerRequestFilter {
 	                String username = decodedJWT.getSubject();
 	                String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
 	                Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+	                System.out.println(authorities);
 	                Arrays.stream(roles).forEach(role ->
 	                        authorities.add(new SimpleGrantedAuthority(role)));
 	                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
