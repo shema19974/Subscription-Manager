@@ -1,5 +1,6 @@
 package com.sm.service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -49,12 +50,22 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
 	}
 	
 	@Override
-	public User saveUser(User user) {
+	public String saveUser(User user) {
 		// TODO Auto-generated method stub
+		String message = "";
 		String encodePassword = passwordEncoder.encode(user.getPassword());
 		user.setPassword(encodePassword);
-		log.info("Saving new user {} to the database", user.getFirstName());
-		return userRepository.save(user);
+		
+		User u = userRepository.findByUsername(user.getUsername());
+	    if(u == null) {
+	    	log.info("Saving new user {} to the database", user.getFirstName());
+			userRepository.save(user);
+			message = "Data saved successfully";
+	    } else {
+	    	log.info("User with the given username already exists", user.getFirstName());
+	    	message = "User with "+ user.getUsername() + " already exists";
+	    }
+		return message;
 	}
 
 	@Override

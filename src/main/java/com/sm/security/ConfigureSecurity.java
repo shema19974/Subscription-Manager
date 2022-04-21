@@ -12,7 +12,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -42,18 +41,12 @@ public class ConfigureSecurity extends WebSecurityConfigurerAdapter{
 		http.cors();
 		http.csrf().disable();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		// Allow every to access the application
-		
 		http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
 		http.authorizeRequests().antMatchers("/login").permitAll();
-		
-		http.authorizeRequests().antMatchers("/api/services/**").permitAll();
-		http.authorizeRequests().antMatchers("/api/products/**").permitAll();
-		http.authorizeRequests().antMatchers("/api/checker").hasAnyRole("ROLE_USER");
-		// Test
-		//http.authorizeRequests().antMatchers("/api/users").permitAll();
-		http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/users").hasAnyAuthority("ROLE_USER");
-		http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/users").permitAll(); //.hasAnyAuthority("ROLE_ADMIN");
+		http.authorizeRequests().antMatchers("/api/users/**").permitAll();
+		//http.authorizeRequests().antMatchers("/api/services/**").hasAnyRole("ROLE_ADMIN");
+		//http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/services/**").hasAnyAuthority("ROLE_USER");
+		http.authorizeRequests().antMatchers("/api/checker").permitAll();
 		http.authorizeRequests().anyRequest().authenticated();
 		http.addFilter(new CustomUserFilter(authenticationManagerBean()));
 		// Make sure that the customUserAuthorization runs before

@@ -37,7 +37,7 @@ public class SubstriptionManagerApplication {
 			userService.saveUser(new User(null, "Will", "Smith", "willy", "1234",new ArrayList<Role>()));
 			userService.saveUser(new User(null, "Kayitare", "Elie", "ke", "1234", new ArrayList<Role>()));
 			// Add roles to users 
-			userService.addRoleToUser("prince1997", "ADMIN_USER");
+			userService.addRoleToUser("prince1997", "ROLE_ADMIN");
 			userService.addRoleToUser("willy", "ROLE_USER");
 			userService.addRoleToUser("ke", "ROLE_USER");
 			// Create eligibility criteria

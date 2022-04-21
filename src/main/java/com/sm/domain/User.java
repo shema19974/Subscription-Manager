@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,9 +26,13 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NotNull
 	private String firstName;
+	@NotNull
 	private String lastName;
+	@Email
 	private String username;
+	@NotNull
 	private String password;
 	@ManyToMany(fetch = FetchType.EAGER) // Load the user with their corresponding roles from the database 
 	private Collection<Role> roles = new ArrayList<>();

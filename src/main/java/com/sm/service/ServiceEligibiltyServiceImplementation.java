@@ -27,7 +27,6 @@ public class ServiceEligibiltyServiceImplementation implements ServiceEligibilty
 		return repository.save(service);
 	}
 
-
 	@Override
 	public ServiceEligibility updateServiceEligibility(ServiceEligibility service, int id) {
 		// find the service and update it
@@ -55,21 +54,17 @@ public class ServiceEligibiltyServiceImplementation implements ServiceEligibilty
 	public String checkServiceEligibility(ServiceEligibility helper) {
 		String message = "";
 		Optional<ServiceEligibility> savedService = repository.findById(1);
-		System.out.println("==================================");
-		System.out.println(helper);
-		System.out.println(savedService);
 		
 		if(helper.getMinimumSubscriberAge() < savedService.get().getMinimumSubscriberAge() || helper.getMinimumAgeOnNetwork() < savedService.get().getMinimumAgeOnNetwork()) {
 			message = "You are not eligible to any service.";
 			System.out.println(message);
 			
 		}else {
-			if((helper.getAmountUsed() >= savedService.get().getAmountUsed() + 100 && helper.getAmountUsed() <= savedService.get().getAmountUsed() + 200) && (helper.getAmountRecharged() >= savedService.get().getAmountRecharged() + 100 && helper.getAmountRecharged() <= savedService.get().getAmountRecharged() + 200 )) {
+			if((helper.getAmountUsed() > savedService.get().getAmountUsed() + 100 && helper.getAmountUsed() <= savedService.get().getAmountUsed() + 200) && (helper.getAmountRecharged() >= savedService.get().getAmountRecharged() + 100 && helper.getAmountRecharged() <= savedService.get().getAmountRecharged() + 200 )) {
 				message = "You are eligible to "+ ProductAmount.ONE_THOURSAND;
 				System.out.println(message);
 				
-			}
-			else if((helper.getAmountUsed() > savedService.get().getAmountUsed() + 200 && helper.getAmountUsed() <= savedService.get().getAmountUsed() + 500) && (helper.getAmountRecharged() > savedService.get().getAmountRecharged() + 200 && helper.getAmountRecharged() <= savedService.get().getAmountRecharged() + 500 )) {
+			} else if((helper.getAmountUsed() >= savedService.get().getAmountUsed() + 200 && helper.getAmountUsed() <= savedService.get().getAmountUsed() + 500) && (helper.getAmountRecharged() >= savedService.get().getAmountRecharged() + 200 && helper.getAmountRecharged() <= savedService.get().getAmountRecharged() + 500 )) {
 				message = "You are eligible to "+ ProductAmount.ONE_THOURSAND + " and "+ ProductAmount.TWO_THOURSAND ;
 				System.out.println(message);
 			}

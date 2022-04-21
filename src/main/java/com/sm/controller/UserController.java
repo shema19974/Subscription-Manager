@@ -34,10 +34,11 @@ public class UserController {
 	}
 	
 	@PostMapping("/users")
-	public ResponseEntity<User> saveUser(@RequestBody User user){
-//       To get and change the response to created (by giving server path) and return uri		
-		URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/users").toUriString());
-		return ResponseEntity.created(uri).body(userService.saveUser(user));
+	public String  saveUser(@RequestBody User user){
+		// To get and change the response to created (by giving server path) and return uri		
+		String message = userService.saveUser(user);
+		System.out.println(message);
+		return message;
 	}
 	
 	@PostMapping("/roles")

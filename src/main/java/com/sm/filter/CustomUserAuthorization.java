@@ -50,6 +50,7 @@ public class CustomUserAuthorization extends OncePerRequestFilter {
 	                filterChain.doFilter(request, response);
 	            } catch (Exception ex) {
 	                log.error("Error loggin in: {}", ex.getMessage());
+	                
 	                response.setStatus(403);
 	                String errorMessage = ex.getMessage();
 	                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
