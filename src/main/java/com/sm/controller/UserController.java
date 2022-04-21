@@ -3,10 +3,8 @@ package com.sm.controller;
 import java.net.URI;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +20,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api")
@@ -57,10 +56,6 @@ public class UserController {
 //	public void refreshToken(HttpServletRequest request, HttpServletResponse response){
 //		String authorizationHeader = request.getHeader("Authorization");
 //	}
-	@GetMapping("/checker")
-	public String check() {
-		return "Checked";
-	}
 	
 }
 

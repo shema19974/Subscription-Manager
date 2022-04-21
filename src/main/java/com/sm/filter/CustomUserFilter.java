@@ -45,21 +45,17 @@ public class CustomUserFilter extends UsernamePasswordAuthenticationFilter{
 		return authenticationManager.authenticate(authenticationToken);
 	}
 
-	
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
 	    User principal = (User) authResult.getPrincipal();
 	    Algorithm algorithm = Algorithm.HMAC256("ShemaPrince".getBytes());
-	    
-	    String accessToken = JWT.create().withSubject(principal.getUsername()).withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000)).withIssuer(request.getRequestURL().toString()).withClaim("roles", principal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList())).sign(algorithm);
-	    String refreshToken = JWT.create().withSubject(principal.getUsername()).withExpiresAt(new Date(System.currentTimeMillis() + 30 * 60 * 1000)).withIssuer(request.getRequestURL().toString()).sign(algorithm);
-//	    response.setHeader("access_token", accessToken);
-//	    response.setHeader("refress_token", refreshToken);
+	    String accessToken = JWT.create().withSubject(principal.getUsername()).withExpiresAt(new Date(System.currentTimeMillis() + 60 * 60 * 1000)).withIssuer(request.getRequestURL().toString()).withClaim("roles", principal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList())).sign(algorithm);
+	    //String refreshToken = JWT.create().withSubject(principal.getUsername()).withExpiresAt(new Date(System.currentTimeMillis() + 30 * 60 * 1000)).withIssuer(request.getRequestURL().toString()).sign(algorithm);
+	    //response.setHeader("access_token", accessToken);
+	    //response.setHeader("refress_token", refreshToken);
 	    Map<String, String> tokens = new HashMap<>();
 	    tokens.put("access_token", accessToken);
-	    tokens.put("refresh_token", refreshToken);
 	    response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 	    new ObjectMapper().writeValue(response.getOutputStream(), tokens);
 	}
-	
 }

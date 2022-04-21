@@ -12,6 +12,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.sm.filter.CustomUserAuthorization;
 import com.sm.filter.CustomUserFilter;
@@ -35,27 +39,42 @@ public class ConfigureSecurity extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// disable the cross-site request forgery
+		http.cors();
 		http.csrf().disable();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//		Allow every to access the application
+		// Allow every to access the application
+		
+		http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
 		http.authorizeRequests().antMatchers("/login").permitAll();
+		
+		http.authorizeRequests().antMatchers("/api/services/**").permitAll();
+		http.authorizeRequests().antMatchers("/api/products/**").permitAll();
 		http.authorizeRequests().antMatchers("/api/checker").hasAnyRole("ROLE_USER");
 		// Test
 		//http.authorizeRequests().antMatchers("/api/users").permitAll();
 		http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/users").hasAnyAuthority("ROLE_USER");
-		http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/users").hasAnyAuthority("ROLE_ADMIN");
+		http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/users").permitAll(); //.hasAnyAuthority("ROLE_ADMIN");
 		http.authorizeRequests().anyRequest().authenticated();
 		http.addFilter(new CustomUserFilter(authenticationManagerBean()));
 		// Make sure that the customUserAuthorization runs before
 		http.addFilterBefore(new CustomUserAuthorization(), UsernamePasswordAuthenticationFilter.class);
-		
+		http.httpBasic();
 	}
 
-	
 	@Bean
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception{
 		return super.authenticationManager();
 	}
 	
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**")
+				.allowedOrigins("*")
+				.allowedMethods("GET", "PUT", "POST", "PATCH", "DELETE", "OPTIONS");
+			}
+		};
+	}
 }

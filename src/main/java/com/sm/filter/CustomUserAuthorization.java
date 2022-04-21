@@ -2,14 +2,15 @@ package com.sm.filter;
 
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,8 +28,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CustomUserAuthorization extends OncePerRequestFilter {
 
-
-	
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 	    if (request.getServletPath().equals("/login")) {
@@ -61,4 +60,6 @@ public class CustomUserAuthorization extends OncePerRequestFilter {
 	        }
 	    }
 	}
+	
+	
 }
