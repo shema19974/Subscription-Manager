@@ -7,7 +7,7 @@ import com.sm.domain.ServiceEligibility;
 
 public interface ServiceEligibiltyService {
 	ServiceEligibility saveServiceEligibility(ServiceEligibility service);
-	ServiceEligibility updateServiceEligibility(ServiceEligibility service, int id);
+	String updateServiceEligibility(ServiceEligibility service, int id);
 	Optional<ServiceEligibility> getServiceEligibility(int id);
 	List<ServiceEligibility> allServiceEligibility();
 	String checkServiceEligibility(ServiceEligibility helper);

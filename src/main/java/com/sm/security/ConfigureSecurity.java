@@ -38,17 +38,17 @@ public class ConfigureSecurity extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// disable the cross-site request forgery
-		http.cors();
+		//http.cors();
 		http.csrf().disable();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
-		http.authorizeRequests().antMatchers("/login").permitAll();
-		http.authorizeRequests().antMatchers("/api/users/**").permitAll();
-		//http.authorizeRequests().antMatchers("/api/services/**").hasAnyRole("ROLE_ADMIN");
-		//http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/services/**").hasAnyAuthority("ROLE_USER");
-		http.authorizeRequests().antMatchers("/api/checker").permitAll();
-		http.authorizeRequests().anyRequest().authenticated();
-		http.addFilter(new CustomUserFilter(authenticationManagerBean()));
+		//http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
+//		http.authorizeRequests().antMatchers("/login").permitAll();
+//		http.authorizeRequests().antMatchers("/api/users/**").permitAll();
+//		//http.authorizeRequests().antMatchers("/api/services/**").hasAnyRole("ROLE_ADMIN");
+//		//http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/services/**").hasAnyAuthority("ROLE_USER");
+//		http.authorizeRequests().antMatchers("/api/checker").permitAll();
+//		http.authorizeRequests().anyRequest().authenticated();
+//		http.addFilter(new CustomUserFilter(authenticationManagerBean()));
 		// Make sure that the customUserAuthorization runs before
 		http.addFilterBefore(new CustomUserAuthorization(), UsernamePasswordAuthenticationFilter.class);
 		http.httpBasic();

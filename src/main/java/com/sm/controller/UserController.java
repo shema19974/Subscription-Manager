@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +19,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
+//@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api")
@@ -52,11 +51,6 @@ public class UserController {
 		userService.addRoleToUser(roleForm.getUsername(), roleForm.getRoleName());
 		return ResponseEntity.ok().build();
 	}	
-	
-//	@PostMapping("/roles/addtouser")
-//	public void refreshToken(HttpServletRequest request, HttpServletResponse response){
-//		String authorizationHeader = request.getHeader("Authorization");
-//	}
 	
 }
 

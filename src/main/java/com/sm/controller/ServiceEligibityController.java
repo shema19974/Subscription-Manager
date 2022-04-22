@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +20,6 @@ import com.sm.service.ServiceEligibiltyService;
 
 import lombok.AllArgsConstructor;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("api/services")
 @AllArgsConstructor
@@ -43,8 +41,8 @@ private final ServiceEligibiltyService eligibilityService;
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<ServiceEligibility> updateServiceEligibility(@PathVariable(value = "id") int id, @RequestBody ServiceEligibility service){
-		return ResponseEntity.ok().body(eligibilityService.updateServiceEligibility(service, id));
+	public String updateServiceEligibility(@PathVariable(value = "id") int id, @RequestBody ServiceEligibility service){
+		return eligibilityService.updateServiceEligibility(service, id);
 	}
 	
 	@RequestMapping(value = "/checker", method = RequestMethod.POST)

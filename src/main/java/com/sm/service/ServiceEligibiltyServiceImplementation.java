@@ -1,14 +1,16 @@
 package com.sm.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
-
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sm.domain.ProductAmount;
 import com.sm.domain.ServiceEligibility;
 import com.sm.repository.ServiceEligibilityRepository;
@@ -22,26 +24,33 @@ public class ServiceEligibiltyServiceImplementation implements ServiceEligibilty
 	
 	@Override
 	public ServiceEligibility saveServiceEligibility(ServiceEligibility service) {
-		// TODO Auto-generated method stub
-		
 		return repository.save(service);
 	}
 
 	@Override
-	public ServiceEligibility updateServiceEligibility(ServiceEligibility service, int id) {
+	public String updateServiceEligibility(ServiceEligibility service, int id) {
 		// find the service and update it
-		Optional<ServiceEligibility> oldService = repository.findById(id);
+		String message = "";
+		ServiceEligibility oldService = repository.findById(id).get();
 		if(oldService == null) {
 			log.error("No such criteria defined");
 			throw new IllegalStateException("No such criteria diffined");
 		}
-		ServiceEligibility se = new ServiceEligibility();
+		try {
+			oldService.setMinimumSubscriberAge(service.getMinimumSubscriberAge());
+			oldService.setMinimumAgeOnNetwork(service.getMinimumAgeOnNetwork());
+			oldService.setAmountRecharged(service.getAmountRecharged());
+			oldService.setAmountUsed(service.getAmountUsed());	
+			repository.save(oldService);
+			log.info("Service updated successfully.");
+		}catch (Exception e) {
+			message = "Service does not exist";
+			log.error(message);
+			throw new NoSuchElementException(message);
+		}
 		
-		se.setMinimumSubscriberAge(service.getMinimumSubscriberAge());
-		se.setMinimumAgeOnNetwork(service.getMinimumAgeOnNetwork());
-		se.setAmountRecharged(service.getAmountRecharged());
-		se.setAmountUsed(service.getAmountUsed());
-		return repository.save(service);
+		return message;
+		
 	}
 
 	@Override

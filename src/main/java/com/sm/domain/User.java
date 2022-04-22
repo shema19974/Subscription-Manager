@@ -26,13 +26,9 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotNull
 	private String firstName;
-	@NotNull
 	private String lastName;
-	@Email
 	private String username;
-	@NotNull
 	private String password;
 	@ManyToMany(fetch = FetchType.EAGER) // Load the user with their corresponding roles from the database 
 	private Collection<Role> roles = new ArrayList<>();
